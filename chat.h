@@ -13,7 +13,17 @@ int alpaca(
     int color,
     int seed,
     int threads,
-    char *prompt
+    char *prompt,
+    char *prompt_file,
+    int n_predict,
+    int top_k,
+    double top_p,
+    int repeat_last_n,
+    double repeat_penalty,
+    int prompt_size,
+    double temperature,
+    int batch_size,
+    char *model_file
 );
 
 

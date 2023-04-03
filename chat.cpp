@@ -1121,7 +1121,17 @@ int alpaca(
     int color,
     int seed,
     int threads,
-    char *prompt
+    char *prompt,
+    char *prompt_file,
+    int n_predict,
+    int top_k,
+    double top_p,
+    int repeat_last_n,
+    double repeat_penalty,
+    int prompt_size,
+    double temperature,
+    int batch_size,
+    char *model_file
 ) {
     char *argv[18];
     int argc = 0;
@@ -1206,6 +1216,126 @@ int alpaca(
         char *argvPrompt2 = (char*)malloc(strlen(prompt)+1);
         snprintf(argvPrompt2,strlen(prompt)+1, "%s", prompt);
         argv[argc] = argvPrompt2;
+        argc++;
+    }
+
+    if (strlen(prompt_file)>0) {
+        char *argvPromptFile1 = (char*)malloc(strlen("-f")+1);
+        snprintf(argvPromptFile1,strlen("-f")+1, "-f");
+        argv[argc] = argvPromptFile1;
+        argc++;
+
+        char *argvPromptFile2 = (char*)malloc(strlen(prompt_file)+1);
+        snprintf(argvPromptFile2,strlen(prompt_file)+1, "%s", prompt_file);
+        argv[argc] = argvPromptFile2;
+        argc++;
+    }
+
+    if (n_predict!=128) {
+        char *argvNPredict1 = (char*)malloc(strlen("-n")+1);
+        snprintf(argvNPredict1,strlen("-n")+1, "-n");
+        argv[argc] = argvNPredict1;
+        argc++;
+
+        char *argvNPredict2 = (char*)malloc(10);
+        snprintf(argvNPredict2,10, "%d", n_predict);
+        argv[argc] = argvNPredict2;
+        argc++;
+    }
+
+    if (top_k!=40) {
+        char *argvTopK1 = (char*)malloc(strlen("--top_k")+1);
+        snprintf(argvTopK1,strlen("--top_k")+1, "--top_k");
+        argv[argc] = argvTopK1;
+        argc++;
+
+        char *argvTopK2 = (char*)malloc(10);
+        snprintf(argvTopK2,10, "%d", top_k);
+        argv[argc] = argvTopK2;
+        argc++;
+    }
+
+    if (top_p!=0.9) {
+        char *argvTopP1 = (char*)malloc(strlen("--top_p")+1);
+        snprintf(argvTopP1,strlen("--top_p")+1, "--top_p");
+        argv[argc] = argvTopP1;
+        argc++;
+
+        char *argvTopP2 = (char*)malloc(10);
+        snprintf(argvTopP2,10, "%f", top_p);
+        argv[argc] = argvTopP2;
+        argc++;
+    }
+
+    if (repeat_last_n!=64) {
+        char *argvRepeatLastN1 = (char*)malloc(strlen("--repeat_last_n")+1);
+        snprintf(argvRepeatLastN1,strlen("--repeat_last_n")+1, "--repeat_last_n");
+        argv[argc] = argvRepeatLastN1;
+        argc++;
+
+        char *argvRepeatLastN2 = (char*)malloc(10);
+        snprintf(argvRepeatLastN2,10, "%d", repeat_last_n);
+        argv[argc] = argvRepeatLastN2;
+        argc++;
+    }
+
+    if (repeat_penalty!=1.3) {
+        char *argvRepeatPenalty1 = (char*)malloc(strlen("--repeat_penalty")+1);
+        snprintf(argvRepeatPenalty1,strlen("--repeat_penalty")+1, "--repeat_penalty");
+        argv[argc] = argvRepeatPenalty1;
+        argc++;
+
+        char *argvRepeatPenalty2 = (char*)malloc(10);
+        snprintf(argvRepeatPenalty2,10, "%f", repeat_penalty);
+        argv[argc] = argvRepeatPenalty2;
+        argc++;
+    }
+
+    if (prompt_size!=2048) {
+        char *argvPromptSize1 = (char*)malloc(strlen("-c")+1);
+        snprintf(argvPromptSize1,strlen("-c")+1, "-c");
+        argv[argc] = argvPromptSize1;
+        argc++;
+
+        char *argvPromptSize2 = (char*)malloc(10);
+        snprintf(argvPromptSize2,10, "%d", prompt_size);
+        argv[argc] = argvPromptSize2;
+        argc++;
+    }
+
+    if (temperature!=0.1) {
+        char *argvTemperature1 = (char*)malloc(strlen("--temp")+1);
+        snprintf(argvTemperature1,strlen("--temp")+1, "--temp");
+        argv[argc] = argvTemperature1;
+        argc++;
+
+        char *argvTemperature2 = (char*)malloc(10);
+        snprintf(argvTemperature2,10, "%f", temperature);
+        argv[argc] = argvTemperature2;
+        argc++;
+    }
+
+    if (batch_size!=8) {
+        char *argvBatchSize1 = (char*)malloc(strlen("-b")+1);
+        snprintf(argvBatchSize1,strlen("-b")+1, "-b");
+        argv[argc] = argvBatchSize1;
+        argc++;
+
+        char *argvBatchSize2 = (char*)malloc(10);
+        snprintf(argvBatchSize2,10, "%d", batch_size);
+        argv[argc] = argvBatchSize2;
+        argc++;
+    }
+
+    if (strlen(model_file)>0) {
+        char *argvModelFile1 = (char*)malloc(strlen("-m")+1);
+        snprintf(argvModelFile1,strlen("-m")+1, "-m");
+        argv[argc] = argvModelFile1;
+        argc++;
+
+        char *argvModelFile2 = (char*)malloc(strlen(model_file)+1);
+        snprintf(argvModelFile2,strlen(model_file)+1, "%s", model_file);
+        argv[argc] = argvModelFile2;
         argc++;
     }
     
