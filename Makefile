@@ -176,7 +176,7 @@ $(info I CC:       $(CCV))
 $(info I CXX:      $(CXXV))
 $(info )
 
-default: chat quantize
+default: chat.o quantize libalpaca.a alpaca-go
 
 #
 # Build library
@@ -189,7 +189,7 @@ utils.o: utils.cpp utils.h
 	$(CXX) $(CXXFLAGS) -c utils.cpp -o utils.o
 
 clean:
-	rm -f *.o main quantize
+	rm -f *.o alpaca-go *.a quantize
 
 chat: chat.cpp ggml.o utils.o
 	$(CXX) $(CXXFLAGS) chat.cpp ggml.o utils.o -o chat $(LDFLAGS)
@@ -202,8 +202,17 @@ chat_mac: chat.cpp ggml.c utils.cpp
 	$(CXX) $(CXXFLAGS) chat.cpp ggml_arm.o utils.cpp -o chat_arm $(LDFLAGS) -target arm64-apple-macos
 	lipo -create -output chat_mac chat_x86 chat_arm
 
+chat.o: chat.cpp ggml.o utils.o
+	$(CXX) $(CXXFLAGS) chat.cpp ggml.o utils.o -o chat.o -c $(LDFLAGS)	
+
 quantize: quantize.cpp ggml.o utils.o
-	$(CXX) $(CXXFLAGS) quantize.cpp ggml.o utils.o -o quantize $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -DQUANTIZE quantize.cpp ggml.o utils.o -o quantize $(LDFLAGS)
+
+libalpaca.a: chat.o ggml.o utils.o
+	ar src libalpaca.a chat.o ggml.o utils.o
+
+alpaca-go: main.go chat.cpp chat.h
+	CGO_CFLAGS_ALLOW='-mf.*' go build .
 
 #
 # Tests

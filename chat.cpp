@@ -1,5 +1,5 @@
 #include "ggml.h"
-
+#include "chat.h"
 #include "utils.h"
 
 #include <cassert>
@@ -791,7 +791,7 @@ const char * llama_print_system_info(void) {
     return s.c_str();
 }
 
-int main(int argc, char ** argv) {
+int chat(int argc, char ** argv) {
     ggml_time_init();
     const int64_t t_main_start_us = ggml_time_us();
 
@@ -1110,4 +1110,105 @@ int main(int argc, char ** argv) {
     }
 
     return 0;
+}
+
+
+int alpaca(
+    int help, 
+    int interactive,
+    int interactive_start,
+    char *reverse_prompt,
+    int color,
+    int seed,
+    int threads,
+    char *prompt
+) {
+    char *argv[18];
+    int argc = 0;
+
+    char *argv0 = (char*)malloc(10);
+    snprintf(argv0,100, "alpaca-go");
+    argv[argc] = argv0;
+    argc++;
+
+    if (help>0) {
+        char *argvHelp = (char*)malloc(3);
+        snprintf(argvHelp,3, "-h");
+        argv[argc] = argvHelp;
+        argc++;
+    }
+
+    if (interactive>0) {
+        char *argvInteractive = (char*)malloc(3);
+        snprintf(argvInteractive,3, "-i");
+        argv[argc] = argvInteractive;
+        argc++;
+    }
+
+    if (interactive_start>0) {
+        char *argvInteractiveStart = (char*)malloc(strlen("--interactive-start"));
+        snprintf(argvInteractiveStart,strlen("--interactive-start")+1, "--interactive-start");
+        argv[argc] = argvInteractiveStart;
+        argc++;
+    }
+
+    if (strlen(reverse_prompt) >0) {
+        char *argvPrompt1 = (char*)malloc(strlen("-r")+1);
+        snprintf(argvPrompt1,strlen("-r")+1, "-r");
+        argv[argc] = argvPrompt1;
+        argc++;
+
+        char *argvPrompt2 = (char*)malloc(strlen(reverse_prompt)+1);
+        snprintf(argvPrompt2,strlen(reverse_prompt)+1, "%s", reverse_prompt);
+        argv[argc] = argvPrompt2;
+        argc++;
+
+    }
+
+    if (color>0) {
+        printf("color: %d\n", color);
+        char *argvColor = (char*)malloc(strlen("--color")+1);
+        snprintf(argvColor,strlen("--color")+1, "--color");
+        argv[argc] = argvColor;
+        argc++;
+    }
+
+    if (seed!=-1) {
+        char *argvSeed1 = (char*)malloc(strlen("--seed")+1);
+        snprintf(argvSeed1,strlen("--seed")+1, "--seed");
+        argv[argc] = argvSeed1;
+        argc++;
+
+        char *argvSeed2 = (char*)malloc(10);
+        snprintf(argvSeed2,10, "%d", seed);
+        argv[argc] = argvSeed2;
+        argc++;
+    }
+
+    if (threads!=4) {
+        char *argvThreads1 = (char*)malloc(strlen("--threads")+1);
+        snprintf(argvThreads1,strlen("--threads")+1, "--threads");
+        argv[argc] = argvThreads1;
+        argc++;
+
+        char *argvThreads2 = (char*)malloc(10);
+        snprintf(argvThreads2,10, "%d", threads);
+        argv[argc] = argvThreads2;
+        argc++;
+    }
+
+    if (strlen(prompt)>0) {
+        char *argvPrompt1 = (char*)malloc(strlen("-p")+1);
+        snprintf(argvPrompt1,strlen("-p")+1, "-p");
+        argv[argc] = argvPrompt1;
+        argc++;
+
+        char *argvPrompt2 = (char*)malloc(strlen(prompt)+1);
+        snprintf(argvPrompt2,strlen(prompt)+1, "%s", prompt);
+        argv[argc] = argvPrompt2;
+        argc++;
+    }
+    
+    return chat(argc,argv);
+
 }

@@ -288,6 +288,7 @@ bool llama_model_quantize(const std::string & fname_inp, const std::string & fna
 // usage:
 //  ./llama-quantize models/llama/ggml-model.bin models/llama/ggml-model-quant.bin type
 //
+#ifdef QUANTIZE
 int main(int argc, char ** argv) {
     ggml_time_init();
     if (argc != 4) {
@@ -336,3 +337,4 @@ int main(int argc, char ** argv) {
 
     return 0;
 }
+#endif
