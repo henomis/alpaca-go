@@ -8,21 +8,10 @@ Run a fast ChatGPT-like model locally on your device. The screencast below is no
 
 This combines the [LLaMA foundation model](https://github.com/facebookresearch/llama) with an [open reproduction](https://github.com/tloen/alpaca-lora) of [Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca) a fine-tuning of the base model to obey instructions (akin to the [RLHF](https://huggingface.co/blog/rlhf) used to train ChatGPT) and a set of modifications to [llama.cpp](https://github.com/ggerganov/llama.cpp) to add a chat interface. 
 
+
 ## Get Started (7B)
 
-Download the zip file corresponding to your operating system from the [latest release](https://github.com/henomis/alpaca-go/releases/latest). On Windows, download `alpaca-win.zip`, on Mac (both Intel or ARM) download `alpaca-mac.zip`, and on Linux (x64) download `alpaca-linux.zip`. 
-
-Download `ggml-alpaca-7b-q4.bin` and place it in the same folder as the `alpaca-go` executable in the zip file. There are several options: 
-
-Once you've downloaded the model weights and placed them into the same directory as the `alpaca-go` or `alpaca-go.exe` executable, run:
-
-```
-./alpaca-go
-```
-
-The weights are based on the published fine-tunes from `alpaca-lora`, converted back into a pytorch checkpoint with a [modified script](https://github.com/tloen/alpaca-lora/pull/19) and then quantized with llama.cpp the regular way. 
-
-## Building from Source (MacOS/Linux)
+### Building from Source (MacOS/Linux)
 
 
 ```sh
@@ -33,8 +22,7 @@ make alpaca-go
 ./alpaca-go
 ```
 
-
-## Building from Source (Windows)
+### Building from Source (Windows)
 
 - Download and install CMake: <https://cmake.org/download/>
 - Download and install `git`. If you've never used git before, consider a GUI client like <https://desktop.github.com/>
@@ -54,6 +42,17 @@ cmake --build . --config Release
 ```
 - (You can add other launch options like `--n 8` as preferred onto the same line)
 - You can now type to the AI in the terminal and it will reply. Enjoy!
+
+### Run
+Download `ggml-alpaca-7b-q4.bin` and place it in the same folder as the `alpaca-go` executable in the zip file. There are several options: 
+
+Once you've downloaded the model weights and placed them into the same directory as the `alpaca-go` or `alpaca-go.exe` executable, run:
+
+```
+./alpaca-go
+```
+
+The weights are based on the published fine-tunes from `alpaca-lora`, converted back into a pytorch checkpoint with a [modified script](https://github.com/tloen/alpaca-lora/pull/19) and then quantized with llama.cpp the regular way. 
 
 ## Credit
 
