@@ -1,6 +1,6 @@
 # Alpaca-go
 
-Run a fast ChatGPT-like model locally on your device. The screencast below is not sped up and running on an M2 Macbook Air with 4GB of weights. 
+Run a fast ChatGPT-like model locally on your device. The screencast below is from [alpaca.cpp](https://github.com/antimatter15/alpaca.cpp) and is not sped up and running on an M2 Macbook Air with 4GB of weights. 
 
 
 [![asciicast](screencast.gif)](https://asciinema.org/a/dfJ8QXZ4u978Ona59LPEldtKK)
@@ -16,7 +16,7 @@ This combines the [LLaMA foundation model](https://github.com/facebookresearch/l
 
 ```sh
 git clone https://github.com/henomis/alpaca-go
-cd alpaca.cpp
+cd alpaca-go
 
 make alpaca-go
 ./alpaca-go
