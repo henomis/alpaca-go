@@ -1,4 +1,4 @@
-# Alpaca.cpp
+# Alpaca-go
 
 Run a fast ChatGPT-like model locally on your device. The screencast below is not sped up and running on an M2 Macbook Air with 4GB of weights. 
 
@@ -12,12 +12,12 @@ This combines the [LLaMA foundation model](https://github.com/facebookresearch/l
 
 Download the zip file corresponding to your operating system from the [latest release](https://github.com/antimatter15/alpaca.cpp/releases/latest). On Windows, download `alpaca-win.zip`, on Mac (both Intel or ARM) download `alpaca-mac.zip`, and on Linux (x64) download `alpaca-linux.zip`. 
 
-Download `ggml-alpaca-7b-q4.bin` and place it in the same folder as the `chat` executable in the zip file. There are several options: 
+Download `ggml-alpaca-7b-q4.bin` and place it in the same folder as the `alpaca-go` executable in the zip file. There are several options: 
 
-Once you've downloaded the model weights and placed them into the same directory as the `chat` or `chat.exe` executable, run:
+Once you've downloaded the model weights and placed them into the same directory as the `alpaca-go` or `alpaca-go.exe` executable, run:
 
 ```
-./chat
+./alpaca-go
 ```
 
 The weights are based on the published fine-tunes from `alpaca-lora`, converted back into a pytorch checkpoint with a [modified script](https://github.com/tloen/alpaca-lora/pull/19) and then quantized with llama.cpp the regular way. 
@@ -29,8 +29,8 @@ The weights are based on the published fine-tunes from `alpaca-lora`, converted 
 git clone https://github.com/antimatter15/alpaca.cpp
 cd alpaca.cpp
 
-make chat
-./chat
+make alpaca-go
+./alpaca-go
 ```
 
 
@@ -50,7 +50,7 @@ cmake --build . --config Release
 - Download the weights via any of the links in "Get started" above, and save the file as `ggml-alpaca-7b-q4.bin` in the main Alpaca directory.
 - In the terminal window, run this command:
 ```ps1
-.\Release\chat.exe
+.\Release\alpaca-go.exe
 ```
 - (You can add other launch options like `--n 8` as preferred onto the same line)
 - You can now type to the AI in the terminal and it will reply. Enjoy!
