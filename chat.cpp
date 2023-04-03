@@ -1175,8 +1175,7 @@ int alpaca(
 
     }
 
-    if (color>0) {
-        printf("color: %d\n", color);
+    if (color>0) {        
         char *argvColor = (char*)malloc(strlen("--color")+1);
         snprintf(argvColor,strlen("--color")+1, "--color");
         argv[argc] = argvColor;
